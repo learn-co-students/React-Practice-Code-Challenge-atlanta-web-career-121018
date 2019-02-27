@@ -55,8 +55,9 @@ class App extends Component {
           return sushiObj;
         }
       })
+      const eatenSushi = newSushiData.filter(sushi => sushi.eaten === true)
       this.setState({
-        sushiInMyBelly: [...this.state.sushiInMyBelly, sushi],
+        sushiInMyBelly: eatenSushi,
         budget: this.state.budget - sushi.price,
         sushis: newSushiData
       })
