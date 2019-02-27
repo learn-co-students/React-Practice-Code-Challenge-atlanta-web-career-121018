@@ -1,9 +1,11 @@
 import React from 'react'
 
 const MoreButton = (props) => {
-    return <button onClick={props.nextFour}>
+    return (
+        <button onClick={props.nextFour}>
             More sushi!
-          </button>
+        </button>
+    )
 }
 
 export default MoreButton

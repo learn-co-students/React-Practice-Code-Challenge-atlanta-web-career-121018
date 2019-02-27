@@ -11,64 +11,76 @@ class App extends Component {
 
         this.state = {
             sushis: [],
+            money: 100,
             index: 0,
-            sushiInMyBelly: [],
-            moneyLeft: 100
+            sushiInMyBelly: []
         }
     }
+
 
     componentDidMount() {
         fetch(API)
         .then(res => res.json())
-        .then(sushis => {
-            // debugger
-            // alternate way- creates state for sushi so we don't have to make Sushi.js a class Component w/ state:
-            // const allSushis = sushis.map(sushi => {...sushi, eaten: false})
+        .then(data => {
             this.setState({
-                sushis: sushis
-                // sushis: allSushis
-            }
-            // ,() => console.log(this.state.sushis)
-            )
+                sushis: data
+            })
         })
     }
 
+    // only show 4 sushis at a time
     chooseFour = () => {
-        // console.log(this.state.sushis.slice(0, 4))
         return this.state.sushis.slice(this.state.index, this.state.index + 4)
     }
 
+
+    // for the more btn- once index gets to 100, start the list over at 0
     nextFour = () => {
-        this.setState({
-            index: this.state.index + 4
+        if (this.state.index < 96) {
+            this.setState({
+                index: this.state.index + 4
+            })
+        } else {
+            this.setState({
+                index: 0
+            })
         }
-        // ,() = console.log(this.state.index)
-        )
     }
 
-    eatSushi = sushi => {
-        // debugger
-        this.setState({
-            sushiInMyBelly: [...this.state.sushiInMyBelly, sushi],
-            moneyLeft: this.state.moneyLeft - sushi.price
-        })
+    // goes down the tree to Sushi.js
+    // when sushi is clicked, send that sushi object here & add it (non-destructively) to sushiInMyBelly
+    eatSushi = (clickedSushi) => {
+        const eatenSushi = {...clickedSushi, eaten: true}
 
+        // console.log(eatenSushi)
+
+        if (this.state.money >= eatenSushi.price) {
+            this.setState({
+                sushiInMyBelly: [...this.state.sushiInMyBelly, eatenSushi],
+                money: this.state.money - clickedSushi.price
+                // }, () => console.log(this.state))
+            })
+        } else if (this.state.money < eatenSushi.price){
+            alert('u broke!!!')
+        }
     }
 
-  render() {
-      // console.log(this.state)
-    return (
-      <div className="app">
-        <SushiContainer
-            sushis={this.chooseFour()}
-            nextFour={this.nextFour}
-            eatSushi={this.eatSushi} />
-        <Table
-            moneyLeft={this.state.moneyLeft}
-            sushiInMyBelly={this.state.sushiInMyBelly}/>
-      </div>
-    );
-  }
+
+    render() {
+        return (
+            <div className="app">
+
+                <SushiContainer
+                    sushis={this.chooseFour()}
+                    nextFour={this.nextFour}
+                    eatSushi={this.eatSushi}/>
+
+                <Table
+                    sushiInMyBelly={this.state.sushiInMyBelly}
+                    money={this.state.money}/>
+            </div>
+        );
+    }
 }
 
 export default App;

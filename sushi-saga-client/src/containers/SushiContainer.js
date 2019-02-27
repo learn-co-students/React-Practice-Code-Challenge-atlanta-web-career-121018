@@ -4,23 +4,25 @@ import Sushi from '../components/Sushi'
 
 const SushiContainer = (props) => {
     // console.log(props)
-    const sushiList = props.sushis.map(sushi =>
+    const mapSushis = props.sushis.map(sushi =>
         <Sushi
             key={sushi.id}
             sushi={sushi}
-            eatSushi={props.eatSushi}/>)
-    // console.log(sushiList)
+            eatSushi={props.eatSushi}/>
+        )
 
-  return (
-    <Fragment>
-      <div className="belt">
-        {sushiList}
-        {/* or props.sushis.map(sushi => <Sushi key={sushi.id} sushi={sushi} eatSushi={props.eatSushi}) */}
-        <MoreButton
-            nextFour={props.nextFour}/>
-      </div>
-    </Fragment>
-  )
+    return (
+        <Fragment>
+            <div className="belt">
+
+                {mapSushis}
+
+                <MoreButton
+                    nextFour={props.nextFour}/>
+
+            </div>
+        </Fragment>
+    )
 }
 
 export default SushiContainer

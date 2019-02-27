@@ -1,38 +1,46 @@
 // import React, { Fragment } from 'react'
 import React, { Component } from 'react'
 
-// when do we use component vs functional component?
+// const Sushi = (props) => {
 class Sushi extends Component {
-    constructor(props) {
-        super(props);
+
+    constructor() {
+        super()
 
         this.state = {
             eaten: false
         }
     }
 
-    handleClick = () => {
+    // when sushi is clicked, set 'clicked' to true
+    handleClick = event => {
         this.setState({
-            eaten: !this.state.eaten
+            eaten: true
         })
-        this.props.eatSushi(this.props.sushi)
+
+        const clickedSushi = this.props.sushi
+
+        // send the clicked sushi object all the way to App.js where the eatSushi function lives so we can add it to sushiInMyBelly!!
+        this.props.eatSushi(clickedSushi)
     }
 
     render() {
-        // console.log(this.props)
+
+        const { name, price, img_url} = this.props.sushi
+
         return (
             <div className="sushi">
-                <div className="plate"
-                    onClick={this.handleClick}>
-                    {this.state.eaten ? null : <img src={this.props.sushi.img_url} width='100%' alt={this.props.sushi.name} />}
+                <div className="plate" onClick={this.handleClick}>
+                    {this.state.eaten ? null : <img src={img_url} width="100%"/>}
                 </div>
 
                 <h4 className="sushi-details">
-                    {this.props.sushi.name} - ${this.props.sushi.price}
+                    {name} - ${price}
                 </h4>
             </div>
         )
     }
 }
+
 
 export default Sushi
