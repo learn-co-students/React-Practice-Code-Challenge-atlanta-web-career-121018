@@ -20,8 +20,10 @@ class App extends Component {
   componentDidMount() {
     fetch(API)
     .then(res => res.json())
-    .then(sushis => {
-      console.log(sushis)
+    .then(sushiData => {
+      const sushis = sushiData.map(sushi => ({
+        ...sushi, eaten: false
+      }))
       this.setState({
         sushis: sushis
       })
@@ -46,9 +48,17 @@ class App extends Component {
 
   eatSushi = (sushi) => {
     if (this.state.budget >= sushi.price) {
+      const newSushiData = this.state.sushis.map(sushiObj => {
+        if (sushiObj.id === sushi.id) {
+          return { ...sushiObj, eaten: true };
+        } else {
+          return sushiObj;
+        }
+      })
       this.setState({
         sushiInMyBelly: [...this.state.sushiInMyBelly, sushi],
-        budget: this.state.budget - sushi.price
+        budget: this.state.budget - sushi.price,
+        sushis: newSushiData
       })
     } else {
       alert("Sorry, no can do!")
