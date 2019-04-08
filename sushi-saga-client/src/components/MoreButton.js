@@ -7,9 +7,7 @@ const MoreButton = (props) => {
     }
 
     return (
-        <button onClick={handleClick}>
-            More sushi!
-        </button>
+        <button onClick={handleClick}>More sushi!</button>
     )
 }
 
