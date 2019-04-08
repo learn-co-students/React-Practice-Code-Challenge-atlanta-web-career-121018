@@ -39,13 +39,13 @@ class App extends Component {
 
     eatSushi = (sushi) => {
         if(this.state.wallet >= sushi.price) {
-            let clickedSushi = this.state.sushis.map(sushiObject => {
-                if(sushiObject.id === sushi.id) {
-                    return { ...sushiObject, isEaten: true }
-                } else {
-                    return sushiObject;
-                }
-            })
+            let clickedSushi = this.state.sushis.map((sushiObject) => {(sushiObject.id === sushi.id) ? { ...sushiObject, isEaten: true } : sushiObject})
+            //     if(sushiObject.id === sushi.id) {
+            //         return { ...sushiObject, isEaten: true }
+            //     } else {
+            //         return sushiObject;
+            //     }
+            // })
 
             let clickedSushiState = clickedSushi.filter(sushi => sushi.isEaten === true)
 
